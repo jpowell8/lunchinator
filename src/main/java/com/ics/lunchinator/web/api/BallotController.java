@@ -1,8 +1,8 @@
 package com.ics.lunchinator.web.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ics.lunchinator.web.model.Ballot;
-import com.ics.lunchinator.web.model.CreateBallot;
+import com.ics.lunchinator.model.Ballot;
+import com.ics.lunchinator.model.CreateBallot;
 import org.springframework.web.bind.annotation.*;
 
 /**

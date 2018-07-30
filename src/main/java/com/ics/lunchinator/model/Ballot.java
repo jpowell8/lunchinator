@@ -1,6 +1,5 @@
-package com.ics.lunchinator.web.model;
+package com.ics.lunchinator.model;
 
-import com.ics.lunchinator.persistence.model.Restaurant;
 import lombok.Data;
 import lombok.NonNull;
 

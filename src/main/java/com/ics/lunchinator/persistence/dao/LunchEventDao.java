@@ -1,7 +1,6 @@
 package com.ics.lunchinator.persistence.dao;
 
-import com.ics.lunchinator.persistence.model.LunchEvent;
-import com.ics.lunchinator.web.model.Ballot;
+import com.ics.lunchinator.model.Ballot;
 
 /**
  * @author joshpowell

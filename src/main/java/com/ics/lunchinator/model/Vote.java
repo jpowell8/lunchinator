@@ -1,4 +1,4 @@
-package com.ics.lunchinator.web.model;
+package com.ics.lunchinator.model;
 
 import lombok.Data;
 import lombok.NonNull;

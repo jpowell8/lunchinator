@@ -1,4 +1,4 @@
-package com.ics.lunchinator.persistence.model;
+package com.ics.lunchinator.model;
 
 /**
  * @author joshpowell
