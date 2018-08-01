@@ -1,6 +1,7 @@
 package com.ics.lunchinator.persistence.dao;
 
-import com.ics.lunchinator.persistence.model.Vote;
+
+import com.ics.lunchinator.model.Vote;
 
 import java.util.List;
 

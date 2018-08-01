@@ -1,8 +1,8 @@
 package com.ics.lunchinator.persistence.dao.impl;
 
+import com.ics.lunchinator.model.Vote;
 import com.ics.lunchinator.persistence.dao.LunchEventDao;
 import com.ics.lunchinator.persistence.dao.VoteDao;
-import com.ics.lunchinator.persistence.model.Vote;
 import com.ics.lunchinator.model.Ballot;
 
 import java.util.List;

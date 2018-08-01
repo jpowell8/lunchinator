@@ -1,14 +1,21 @@
-package com.ics.lunchinator.web.api;
+package com.ics.lunchinator.webservice;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ics.lunchinator.model.Ballot;
 import com.ics.lunchinator.model.CreateBallot;
+import com.ics.lunchinator.model.Restaurant;
+import com.ics.lunchinator.webservice.httpMappedExceptions.InvalidTimeException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+
+import static com.ics.lunchinator.service.LunchinatorService.isTimeValid;
 
 /**
  * @author joshpowell
  */
-@RestController(value = "/api")
+@RestController
+@RequestMapping(value = "/api")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BallotController {
 
@@ -20,7 +27,7 @@ public class BallotController {
   @GetMapping(value = "/ballot/{ballotId}")
   public Ballot getBallot(@PathVariable String ballotId) {
 
-    return null;
+    return new Ballot(new Restaurant(), new Restaurant(), new ArrayList<Restaurant>());
   }
 
   /**
@@ -30,6 +37,12 @@ public class BallotController {
    */
   @PostMapping(value = "/create-ballot")
   public void createBallot(@RequestBody CreateBallot ballotToCreate) {
+
+
+//    //TODO check time is valid
+    if(!isTimeValid(ballotToCreate)) {
+      throw new InvalidTimeException("Time or date is invalid, must be later than the current time");
+    }
 
   }
 

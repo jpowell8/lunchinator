@@ -18,7 +18,7 @@ public class RestaurantsAndReviewsClient {
 
   public List<Restaurant> getAllRestaurants(){
     ResponseEntity<List<Restaurant>> responseEntity =
-        restTemplate.exchange("https://interview-project-17987.herokuapp.com/api/restaurants",
+        restTemplate.exchange("https://interview-project-17987.herokuapp.com/webservice/restaurants",
             HttpMethod.GET, null, new ParameterizedTypeReference<List<Restaurant>>() {
             });
     return responseEntity.getBody();
@@ -26,16 +26,16 @@ public class RestaurantsAndReviewsClient {
 
   //TODO pull URL to const
   public Restaurant getRestaurant(String id) {
-    return restTemplate.getForObject("https://interview-project-17987.herokuapp.com/api/restaurants/" + id, Restaurant.class);
+    return restTemplate.getForObject("https://interview-project-17987.herokuapp.com/webservice/restaurants/" + id, Restaurant.class);
   }
 
   public List<Review> getAllReviews(){
-    return restTemplate.exchange("https://interview-project-17987.herokuapp.com/api/reviews",
+    return restTemplate.exchange("https://interview-project-17987.herokuapp.com/webservice/reviews",
         HttpMethod.GET, null, new ParameterizedTypeReference<List<Review>>() {}).getBody();
   };
 
   public List<Review> getReviewsForRestaurant(String restaurantName) {
-      return restTemplate.exchange("https://interview-project-17987.herokuapp.com/api/reviews/" + restaurantName,
+      return restTemplate.exchange("https://interview-project-17987.herokuapp.com/webservice/reviews/" + restaurantName,
           HttpMethod.GET, null, new ParameterizedTypeReference<List<Review>>() {}).getBody();
     };
 
