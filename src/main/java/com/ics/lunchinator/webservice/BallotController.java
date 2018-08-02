@@ -38,6 +38,7 @@ public class BallotController {
   @PostMapping(value = "/create-ballot")
   public void createBallot(@RequestBody CreateBallot ballotToCreate) {
 
+//    if ballotToCreate.getEndTime()
 
 //    //TODO check time is valid
     if(!isTimeValid(ballotToCreate)) {
