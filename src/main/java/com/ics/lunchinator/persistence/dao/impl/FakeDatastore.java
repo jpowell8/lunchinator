@@ -1,36 +1,44 @@
 package com.ics.lunchinator.persistence.dao.impl;
 
+import com.ics.lunchinator.model.Ballot;
 import com.ics.lunchinator.model.Vote;
 import com.ics.lunchinator.persistence.dao.LunchEventDao;
 import com.ics.lunchinator.persistence.dao.VoteDao;
-import com.ics.lunchinator.model.Ballot;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author joshpowell
  */
+@Component
 public class FakeDatastore implements LunchEventDao, VoteDao {
 
+  private volatile static Map<String, Ballot> database = new HashMap<>();
 
   @Override
-  public String createBallot() {
-    return null;
+  public String createBallot(Ballot ballot) {
+
+    String guid = UUID.randomUUID().toString();
+    database.put(guid, ballot);
+    return guid;
   }
 
   @Override
-  public Ballot readBallot(String ballotId) {
-    return null;
+  public Ballot getBallot(String ballotId) {
+
+    return database.get(ballotId);
   }
 
-  @Override
-  public List<Vote> getVotes(String ballotId) {
-    return null;
-  }
 
   @Override
-  public boolean addVote(Vote vote) {
-    return false;
+  public void addVote(Vote vote) {
+    database.get(vote.ballotId).getVotes().stream()
+        .filter(v -> v.getEmailAddress().equalsIgnoreCase(vote.getEmailAddress()))
+        .findFirst().get()
+        .setRestaurantId(vote.getRestaurantId());
   }
 
 }

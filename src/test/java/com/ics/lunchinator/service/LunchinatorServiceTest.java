@@ -1,6 +1,6 @@
 package com.ics.lunchinator.service;
 
-import com.ics.lunchinator.model.CreateBallot;
+import com.ics.lunchinator.model.Ballot;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class LunchinatorServiceTest {
   public void isTimeValid_past_false(){
     Date past = new Date(System.currentTimeMillis() - Calendar.HOUR);
 
-    CreateBallot ballot = new CreateBallot(past, Lists.emptyList());
+    Ballot ballot = new Ballot(past, Lists.emptyList());
 
     Assert.assertFalse(isTimeValid(ballot));
   }
@@ -29,7 +29,7 @@ public class LunchinatorServiceTest {
   public void isTimeValid_future_true(){
     Date future = new Date(System.currentTimeMillis() + Calendar.HOUR);
 
-    CreateBallot ballot = new CreateBallot(future, Lists.emptyList());
+    Ballot ballot = new Ballot(future, Lists.emptyList());
 
     Assert.assertTrue(isTimeValid(ballot));
   }

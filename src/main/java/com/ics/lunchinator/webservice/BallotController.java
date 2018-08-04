@@ -2,12 +2,16 @@ package com.ics.lunchinator.webservice;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ics.lunchinator.model.Ballot;
-import com.ics.lunchinator.model.CreateBallot;
-import com.ics.lunchinator.model.Restaurant;
+import com.ics.lunchinator.model.BallotSummary;
+import com.ics.lunchinator.service.LunchinatorService;
 import com.ics.lunchinator.webservice.httpMappedExceptions.InvalidTimeException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
 
 import static com.ics.lunchinator.service.LunchinatorService.isTimeValid;
 
@@ -19,32 +23,57 @@ import static com.ics.lunchinator.service.LunchinatorService.isTimeValid;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BallotController {
 
+  private LunchinatorService lunchinatorService;
+
+  @Autowired
+  public BallotController(@NotNull LunchinatorService lunchinatorService) {
+    this.lunchinatorService = lunchinatorService;
+  }
+
   /**
-   * GET Ballot
+   * GET BallotSummary
    * TODO include parameter documentation
    * TODO include response type documentation
    */
   @GetMapping(value = "/ballot/{ballotId}")
-  public Ballot getBallot(@PathVariable String ballotId) {
+  public ResponseEntity<BallotSummary> getBallot(@PathVariable String ballotId) {
 
-    return new Ballot(new Restaurant(), new Restaurant(), new ArrayList<Restaurant>());
+    BallotSummary summary = lunchinatorService.getBallotSummary(ballotId);
+    if (summary == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(summary);
   }
 
   /**
-   * POST Ballot
+   * POST BallotSummary
    * TODO include parameter documentation
    * TODO include response type documentation
    */
   @PostMapping(value = "/create-ballot")
-  public void createBallot(@RequestBody CreateBallot ballotToCreate) {
+  public ResponseEntity<Void> createBallot(@RequestBody Ballot ballotToCreate) {
 
-//    if ballotToCreate.getEndTime()
+    if (!isListOfVotersValid(ballotToCreate)) {
+      HttpHeaders headers = new HttpHeaders();
+      headers.add(HttpHeaders.WARNING, "Invalid list of voters.");
+      return ResponseEntity.badRequest().headers(headers).build();
+    }
 
-//    //TODO check time is valid
-    if(!isTimeValid(ballotToCreate)) {
+    if (!isTimeValid(ballotToCreate)) {
       throw new InvalidTimeException("Time or date is invalid, must be later than the current time");
     }
 
+    String uri = lunchinatorService.createBallot(ballotToCreate);
+
+    return ResponseEntity.created(URI.create(uri)).build();
+  }
+
+  private boolean isListOfVotersValid(Ballot ballot) {
+    if (ballot.getVotes().isEmpty()) {
+      return false;
+    }
+    //Insert any other sanitation checks here, or in the setter for the Ballot voter object
+    return true;
   }
 
 }

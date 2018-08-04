@@ -12,9 +12,9 @@ public class CreateBallotTest {
 
   @Test
   public void setEndTimeDefault() {
-    CreateBallot ballot = new CreateBallot(new Date(), Lists.emptyList());
+    Ballot ballot = new Ballot(new Date(), Lists.emptyList());
     ballot.setEndTime(null);
-    Date defaultEndTime = ballot.endTime;
+    Date defaultEndTime = ballot.getEndTime();
     System.out.println(defaultEndTime);
   }
 }
