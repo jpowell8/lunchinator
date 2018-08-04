@@ -15,6 +15,5 @@ public class CreateBallotTest {
     Ballot ballot = new Ballot(new Date(), Lists.emptyList());
     ballot.setEndTime(null);
     Date defaultEndTime = ballot.getEndTime();
-    System.out.println(defaultEndTime);
   }
 }

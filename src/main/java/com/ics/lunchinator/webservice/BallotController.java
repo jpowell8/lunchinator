@@ -1,6 +1,5 @@
 package com.ics.lunchinator.webservice;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ics.lunchinator.model.Ballot;
 import com.ics.lunchinator.model.BallotSummary;
 import com.ics.lunchinator.service.LunchinatorService;
@@ -20,7 +19,6 @@ import static com.ics.lunchinator.service.LunchinatorService.isTimeValid;
  */
 @RestController
 @RequestMapping(value = "/api")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BallotController {
 
   private LunchinatorService lunchinatorService;
@@ -51,7 +49,7 @@ public class BallotController {
    * TODO include response type documentation
    */
   @PostMapping(value = "/create-ballot")
-  public ResponseEntity<Void> createBallot(@RequestBody Ballot ballotToCreate) {
+  public ResponseEntity<String> createBallot(@RequestBody Ballot ballotToCreate) {
 
     if (!isListOfVotersValid(ballotToCreate)) {
       HttpHeaders headers = new HttpHeaders();
@@ -65,7 +63,7 @@ public class BallotController {
 
     String uri = lunchinatorService.createBallot(ballotToCreate);
 
-    return ResponseEntity.created(URI.create(uri)).build();
+    return ResponseEntity.created(URI.create(uri)).body("{ \"ballotId\" : \"" + uri + "\" }");
   }
 
   private boolean isListOfVotersValid(Ballot ballot) {

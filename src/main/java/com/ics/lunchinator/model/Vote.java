@@ -1,16 +1,16 @@
 package com.ics.lunchinator.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
-
-import java.util.Objects;
 
 /**
  * @author joshpowell
  */
 @Data
 @Getter
+@AllArgsConstructor
 public class Vote {
 
   private int restaurantId = -1;
@@ -21,7 +21,7 @@ public class Vote {
   @NonNull
   public String emailAddress;
 
-  public Vote(String voterName, String emailAddress) {
+  public Vote(String emailAddress, String voterName) {
     this.voterName = voterName;
     this.emailAddress = emailAddress;
   }
@@ -33,8 +33,8 @@ public class Vote {
 
   public boolean matches(Vote vote) {
     if (this == vote) return true;
-    return Objects.equals(getVoterName(), vote.getVoterName()) &&
-        Objects.equals(getEmailAddress(), vote.getEmailAddress());
+    return getVoterName().equalsIgnoreCase(vote.getVoterName()) &&
+        getEmailAddress().equalsIgnoreCase(vote.getEmailAddress());
   }
 
 }

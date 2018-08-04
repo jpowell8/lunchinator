@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,7 +25,12 @@ public class VoteController {
 
   //POST vote
   @PostMapping
-  public ResponseEntity<Void> castVote(@RequestBody Vote vote) {
+  public ResponseEntity<Void> castVote(@RequestParam(name = "id") int id,
+                                       @RequestParam(name = "ballotId") String ballotId,
+                                       @RequestParam(name = "voterName") String voterName,
+                                       @RequestParam(name = "emailAddress") String emailAddress) {
+
+    Vote vote = new Vote(id, voterName, ballotId, emailAddress);
 
     //check that id corresponds to a real ballot
     Ballot ballot = lunchinatorService.getBallot(vote.ballotId);
